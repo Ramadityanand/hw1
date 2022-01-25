@@ -94,7 +94,7 @@ CREATE TABLE character (
   character_name TEXT
 );
 
-CREATE TABLE actor (
+CREATE TABLE cast (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   movie_id INTEGER,
   actor_id INTEGER,
