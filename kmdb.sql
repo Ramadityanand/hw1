@@ -365,9 +365,12 @@ VALUES (
 
 -- The SQL statement for the movies output
 -- TODO!
+
+-- SELECT * FROM movie;
+
 SELECT movie.title, movie.year, movie.MPAA_rating, people.name
-FROM movie INNER JOIN movie on movie.director_id = people.id
-;
+FROM movie INNER JOIN people on movie.director_id = people.id
+GROUP BY movie.title;
 
 -- Prints a header for the cast output
 .print ""
