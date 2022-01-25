@@ -66,13 +66,14 @@
 .mode column
 .headers off
 
+
 -- Drop existing tables, so you'll start fresh each time this script is run.
 -- TODO!
 
 DROP TABLE IF EXISTS movie;
 DROP TABLE IF EXISTS people;
 DROP TABLE IF EXISTS character;
-DROP TABLE IF EXISTS cast;
+DROP TABLE IF EXISTS crew;
 
 -- Create new tables, according to your domain model
 -- TODO!
@@ -95,7 +96,7 @@ CREATE TABLE character (
   character_name TEXT
 );
 
-CREATE TABLE cast (
+CREATE TABLE crew (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   movie_id INTEGER,
   people_id INTEGER,
@@ -267,91 +268,91 @@ VALUES (
 
 -- Entering foreign ids info
 
-INSERT INTO cast (
+INSERT INTO crew (
   movie_id, people_id, character_id
 )
 VALUES (
     1,2,1
 );
-INSERT INTO cast (
+INSERT INTO crew (
   movie_id, people_id, character_id
 )
 VALUES (
     1,3,2
 );
-INSERT INTO cast (
+INSERT INTO crew (
   movie_id, people_id, character_id
 )
 VALUES (
     1,4,3
 );
-INSERT INTO cast (
+INSERT INTO crew (
   movie_id, people_id, character_id
 )
 VALUES (
     1,5,4
 );
-INSERT INTO cast (
+INSERT INTO crew (
   movie_id, people_id, character_id
 )
 VALUES (
     1,6,5
 );
-INSERT INTO cast (
+INSERT INTO crew (
   movie_id, people_id, character_id
 )
 VALUES (
     2,2,1
 );
-INSERT INTO cast (
+INSERT INTO crew (
   movie_id, people_id, character_id
 )
 VALUES (
     2,7,6
 );
-INSERT INTO cast (
+INSERT INTO crew (
   movie_id, people_id, character_id
 )
 VALUES (
     2,8,7
 );
-INSERT INTO cast (
+INSERT INTO crew (
   movie_id, people_id, character_id
 )
 VALUES (
     2,3,2
 );
-INSERT INTO cast (
+INSERT INTO crew (
   movie_id, people_id, character_id
 )
 VALUES (
     2,9,4
 );
-INSERT INTO cast (
+INSERT INTO crew (
   movie_id, people_id, character_id
 )
 VALUES (
     3,2,1
 );
-INSERT INTO cast (
+INSERT INTO crew (
   movie_id, people_id, character_id
 )
 VALUES (
     3,6,5
 );
-INSERT INTO cast (
+INSERT INTO crew (
   movie_id, people_id, character_id
 )
 VALUES (
     3,10,8
 );
-INSERT INTO cast (
+INSERT INTO crew (
   movie_id, people_id, character_id
 )
 VALUES (
     3,11,9
 );
-INSERT INTO cast (
+INSERT INTO crew (
   movie_id, people_id, character_id
 )
 VALUES (
@@ -366,13 +367,14 @@ VALUES (
 -- The SQL statement for the movies output
 -- TODO!
 
--- SELECT * FROM movie;
-
+.width 25, 5, 5, 30
 SELECT movie.title, movie.year, movie.MPAA_rating, people.name
-FROM movie INNER JOIN people on movie.director_id = people.id
+FROM movie INNER JOIN people ON movie.director_id = people.id
 GROUP BY movie.title;
 
--- Prints a header for the cast output
+
+
+-- Prints a header for the crew output
 .print ""
 .print "Top Cast"
 .print "========"
@@ -381,3 +383,18 @@ GROUP BY movie.title;
 
 -- The SQL statement for the cast output
 -- TODO!
+
+--SELECT * FROM crew
+
+SELECT movie.title
+--, people.name, character.character_name
+FROM movie;
+--INNER JOIN crew ON movie.id = crew.movie_id
+--INNER JOIN crew ON people.id = crew.people_id
+-- INNER JOIN crew ON character.id = crew.character_id;
+--GROUP BY movie.title;
+
+SELECT movie.title, people.name
+FROM movie
+INNER JOIN movie ON crew.movie_id = movie.id
+INNER JOIN people ON people.id = crew.people_id;
