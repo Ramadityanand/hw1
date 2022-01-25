@@ -66,17 +66,14 @@
 .mode column
 .headers off
 
-
 -- Drop existing tables, so you'll start fresh each time this script is run.
--- TODO!
 
 DROP TABLE IF EXISTS movie;
 DROP TABLE IF EXISTS people;
 DROP TABLE IF EXISTS character;
 DROP TABLE IF EXISTS crew;
 
--- Create new tables, according to your domain model
--- TODO!
+-- Create new tables, according to the domain model
 
 CREATE TABLE movie (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -105,9 +102,8 @@ CREATE TABLE crew (
 
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
--- TODO!
 
--- Entering movie info
+-- Populating movie table with data
 
 INSERT INTO movie (
   title, year, MPAA_rating, director_id
@@ -128,7 +124,7 @@ VALUES (
   "The Dark Knight Rises", 2012, "PG-13", 1
 );
 
--- Entering people info
+-- Populating people table with data
 
 INSERT INTO people (
   name
@@ -203,7 +199,7 @@ VALUES (
   "Anne Hathaway"
 );
 
--- Entering Character info
+-- Populating Character table with data
 
 INSERT INTO character (
   character_name
@@ -266,7 +262,7 @@ VALUES (
   "Selina Kyle"
 );
 
--- Entering foreign ids info
+-- Populating crew table with data - Foriegn ID keys
 
 INSERT INTO crew (
   movie_id, people_id, character_id
@@ -365,14 +361,11 @@ VALUES (
 .print ""
 
 -- The SQL statement for the movies output
--- TODO!
 
 .width 25, 5, 5, 30
 SELECT movie.title, movie.year, movie.MPAA_rating, people.name
 FROM movie INNER JOIN people ON movie.director_id = people.id
 GROUP BY movie.title;
-
-
 
 -- Prints a header for the crew output
 .print ""
@@ -380,21 +373,11 @@ GROUP BY movie.title;
 .print "========"
 .print ""
 
-
 -- The SQL statement for the cast output
--- TODO!
 
---SELECT * FROM crew
-
-SELECT movie.title
---, people.name, character.character_name
-FROM movie;
---INNER JOIN crew ON movie.id = crew.movie_id
---INNER JOIN crew ON people.id = crew.people_id
--- INNER JOIN crew ON character.id = crew.character_id;
---GROUP BY movie.title;
-
-SELECT movie.title, people.name
-FROM movie
+.width 25, 25, 25
+SELECT movie.title, people.name, character.character_name
+FROM crew
 INNER JOIN movie ON crew.movie_id = movie.id
-INNER JOIN people ON people.id = crew.people_id;
+INNER JOIN people ON people.id = crew.people_id
+INNER JOIN character ON character.id = crew.character_id;
